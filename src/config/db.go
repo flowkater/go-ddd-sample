@@ -20,10 +20,6 @@ func InitDB() error {
 		return err
 	}
 
-	if err := conn.AutoMigrate(&domain.Todo{}); err != nil {
-		return err
-	}
-
 	sqlDb, err := conn.DB()
 	if err != nil {
 		return err
@@ -33,6 +29,10 @@ func InitDB() error {
 	sqlDb.SetMaxOpenConns(100)
 
 	db = conn.Set("gorm:auto_update", false)
+
+	if err := conn.AutoMigrate(&domain.Todo{}); err != nil {
+		return err
+	}
 
 	return nil
 }

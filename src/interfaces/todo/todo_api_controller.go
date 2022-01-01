@@ -26,3 +26,8 @@ func (t *TodoApiController) AddTodo(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, todoInfo)
 }
+
+func RegiterHandlerTodos(e *echo.Echo) {
+	todoApiController := &TodoApiController{}
+	e.POST("/todos", todoApiController.AddTodo)
+}

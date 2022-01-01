@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/flowkater/go-ddd-sample/src/config"
+	interfaces "github.com/flowkater/go-ddd-sample/src/interfaces/todo"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -27,6 +28,8 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(200, "Hello, World!")
 	})
+
+	interfaces.RegiterHandlerTodos(e)
 
 	e.HideBanner = true
 	e.Logger.Fatal(e.Start(":8000"))
