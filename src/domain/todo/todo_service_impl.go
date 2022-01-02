@@ -1,20 +1,20 @@
 package domain
 
-import "fmt"
-
-type todoService struct{}
+type todoService struct {
+	todoStore TodoStore
+}
 
 func NewTodoService() TodoService {
 	return &todoService{}
 }
 
 func (t *todoService) AddTodo(command *TodoCommand) (todoInfo *TodoInfo, err error) {
-	todo := command.ToEntity()
+	initTodo := command.ToEntity()
+	todo, err := t.todoStore.Store(initTodo)
+	if err != nil {
+		return nil, err
+	}
 
-	fmt.Println(todo)
-	// if err := db.Create(todo).Error; err != nil {
-	// 	return nil, err
-	// }
 	return &TodoInfo{
 		ID:          todo.ID,
 		Name:        todo.Name,

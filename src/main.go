@@ -1,12 +1,18 @@
 package main
 
 import (
+	"github.com/flowkater/go-ddd-sample/src/config"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
 	e := echo.New()
+
+	if err := config.InitDB(); err != nil {
+		panic(err.Error())
+	}
+
 	e.Use(middleware.Recover())
 	e.Use(middleware.RequestID())
 	// e.Use(config.ContextLogger())

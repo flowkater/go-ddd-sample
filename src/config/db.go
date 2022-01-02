@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -16,6 +17,10 @@ func InitDB() error {
 		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), os.Getenv("DB_PORT"))
 	conn, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
+		return err
+	}
+
+	if err := conn.AutoMigrate(&domain.Todo{}); err != nil {
 		return err
 	}
 
