@@ -1,5 +1,7 @@
 package domain
 
+import "gorm.io/gorm"
+
 type TodoStore interface {
-	Store(todo *Todo) (*Todo, error)
+	Store(db *gorm.DB, todo *Todo) (*Todo, error)
 }

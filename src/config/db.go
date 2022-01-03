@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -29,10 +28,6 @@ func InitDB() error {
 	sqlDb.SetMaxOpenConns(100)
 
 	db = conn.Set("gorm:auto_update", false)
-
-	if err := conn.AutoMigrate(&domain.Todo{}); err != nil {
-		return err
-	}
 
 	return nil
 }
