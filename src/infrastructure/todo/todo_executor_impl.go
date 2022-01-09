@@ -15,8 +15,7 @@ func NewTodoExecutor(todoRepository TodoRepository) domain.TodoExecutor {
 	}
 }
 
-func (t *todoExecutor) UpdateDueDate(db *gorm.DB, dueDate string, todo *domain.Todo) (*domain.Todo, error) {
-	todo.SetDueDate(dueDate)
+func (t *todoExecutor) Update(db *gorm.DB, todo *domain.Todo) (*domain.Todo, error) {
 	return t.todoRepository.Update(db, todo)
 }
 

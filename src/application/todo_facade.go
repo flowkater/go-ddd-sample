@@ -16,12 +16,12 @@ func NewTodoFacde(todoService domain.TodoService) TodoFacade {
 	}
 }
 
-func (t *TodoFacade) AddTodo(ctx context.Context, command *domain.TodoCommand) (*domain.TodoInfo, error) {
+func (t *TodoFacade) AddTodo(ctx context.Context, command *domain.TodoCommandAddTodoRequest) (*domain.TodoInfo, error) {
 	return t.todoService.AddTodo(ctx, command)
 }
 
-func (t *TodoFacade) UpdateDueDateTodo(ctx context.Context, dueDate string, id uint) (*domain.TodoInfo, error) {
-	return t.todoService.UpdateDueDateTodo(ctx, dueDate, id)
+func (t *TodoFacade) UpdateTodo(ctx context.Context, command *domain.TodoCommandUpdateTodoRequest) (*domain.TodoInfo, error) {
+	return t.todoService.UpdateTodo(ctx, command)
 }
 
 func (t *TodoFacade) DoneTodo(ctx context.Context, id uint) (*domain.TodoInfo, error) {

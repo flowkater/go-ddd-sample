@@ -24,7 +24,7 @@ func NewTodoService(
 	}
 }
 
-func (t *todoService) AddTodo(ctx context.Context, command *TodoCommand) (*TodoInfo, error) {
+func (t *todoService) AddTodo(ctx context.Context, command *TodoCommandAddTodoRequest) (*TodoInfo, error) {
 	db := config.DBWithContext(ctx)
 
 	initTodo := command.ToEntity()
@@ -42,15 +42,17 @@ func (t *todoService) AddTodo(ctx context.Context, command *TodoCommand) (*TodoI
 	}, nil
 }
 
-func (t *todoService) UpdateDueDateTodo(ctx context.Context, dueDate string, id uint) (*TodoInfo, error) {
+func (t *todoService) UpdateTodo(ctx context.Context, command *TodoCommandUpdateTodoRequest) (*TodoInfo, error) {
 	db := config.DBWithContext(ctx)
 
-	getTodo, err := t.todoReader.GetTodo(db, id)
+	getTodo, err := t.todoReader.GetTodo(db, command.ID)
 	if err != nil {
 		return nil, err
 	}
 
-	todo, err := t.todoExecutor.UpdateDueDate(db, dueDate, getTodo)
+	updateTodo := command.ToEntity(getTodo)
+
+	todo, err := t.todoExecutor.Update(db, updateTodo)
 	if err != nil {
 		return nil, err
 	}

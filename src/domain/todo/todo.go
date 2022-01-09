@@ -17,3 +17,7 @@ func (t *Todo) SetDueDate(dueDate string) {
 func (t *Todo) ToggleDone() {
 	t.Done = !t.Done
 }
+
+func (t *Todo) SetDescription(description string) {
+	t.Description = description
+}
