@@ -1,13 +1,16 @@
 package domain
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Todo struct {
-	gorm.Model
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
 	Done        bool    `json:"done"`
 	DueDate     *string `json:"due_date"`
+	UserID      uint
+	gorm.Model
 }
 
 func (t *Todo) SetDueDate(dueDate string) {

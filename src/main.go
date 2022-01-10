@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/flowkater/go-ddd-sample/src/config"
-	domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
+	todo "github.com/flowkater/go-ddd-sample/src/domain/todo"
+	user "github.com/flowkater/go-ddd-sample/src/domain/user"
 	interfaces "github.com/flowkater/go-ddd-sample/src/interfaces/todo"
 	"github.com/flowkater/go-ddd-sample/src/module"
 	"github.com/labstack/echo/v4"
@@ -17,7 +18,7 @@ func main() {
 	}
 
 	db := config.DB()
-	if err := db.AutoMigrate(&domain.Todo{}); err != nil {
+	if err := db.AutoMigrate(&user.User{}, &todo.Todo{}); err != nil {
 		panic(err.Error())
 	}
 
