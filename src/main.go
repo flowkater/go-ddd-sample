@@ -1,12 +1,13 @@
 package main
 
 import (
+	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/flowkater/go-ddd-sample/src/config"
 	"github.com/flowkater/go-ddd-sample/src/domain/todo_domain"
 	"github.com/flowkater/go-ddd-sample/src/domain/user_domain"
-
-	interfaces "github.com/flowkater/go-ddd-sample/src/interfaces/todo"
+	"github.com/flowkater/go-ddd-sample/src/interface/resolver"
 	"github.com/flowkater/go-ddd-sample/src/module"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -38,10 +39,61 @@ func main() {
 		return c.String(200, "Hello, World!")
 	})
 
-	todoApiController := module.InitializeTodoApiController()
-
-	interfaces.RegiterHandlerTodos(e, todoApiController)
+	registerGraphqlHandler(e)
 
 	e.HideBanner = true
 	e.Logger.Fatal(e.Start(":8000"))
 }
+
+func registerGraphqlHandler(e *echo.Echo) {
+	todoFacade := module.InitializeTodoFacade()
+
+	config := resolver.Config{
+		Resolvers: resolver.NewResolver(todoFacade),
+	}
+
+	graphqlHandler := func(c echo.Context) error {
+		return GraphqlHandler(c, config)
+	}
+
+	e.POST("/graphql", graphqlHandler)
+}
+
+func GraphqlHandler(c echo.Context, config resolver.Config) error {
+	h := handler.NewDefaultServer(resolver.NewExecutableSchema(config))
+
+	r := c.Request()
+
+	// if c.Get("user") != nil {
+	// 	user := auth.GetUserByJWT(c)
+	// 	if user != nil {
+	// 		ctx := context.WithValue(r.Context(), auth.UserCtxKey, user)
+	// 		r = r.WithContext(ctx)
+
+	// 		ctx = context.WithValue(r.Context(), auth.IpCtxKey, c.RealIP())
+	// 		r = r.WithContext(ctx)
+
+	// 		// ctx = context.WithValue(r.Context(), auth.DateChangeTimeCtxKey, r.Header.Get("Date-Change-Time"))
+	// 		// r = r.WithContext(ctx)
+	// 	}
+	// }
+
+	h.ServeHTTP(c.Response(), r)
+
+	// .SetRecoverFunc(func(ctx context.Context, err interface{}) error {
+	// 	// notify bug tracker...
+
+	// 	return errors.New("Internal server error!")
+	// })
+
+	return nil
+}
+
+// srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+
+// 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
+// 	http.Handle("/query", srv)
+
+// 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+// 	log.Fatal(http.ListenAndServe(":"+port, nil))
+// }

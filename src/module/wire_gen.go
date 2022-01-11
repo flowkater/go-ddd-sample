@@ -10,18 +10,16 @@ import (
 	"github.com/flowkater/go-ddd-sample/src/application"
 	"github.com/flowkater/go-ddd-sample/src/domain/todo_domain"
 	"github.com/flowkater/go-ddd-sample/src/infrastructure/todo_infrastructure"
-	"github.com/flowkater/go-ddd-sample/src/interfaces/todo"
 )
 
 // Injectors from wire.go:
 
-func InitializeTodoApiController() *interfaces.TodoApiController {
+func InitializeTodoFacade() application.TodoFacade {
 	todoRepository := todo_infrastructure.NewTodoRepository()
 	todoReader := todo_infrastructure.NewTodoReader(todoRepository)
 	todoStore := todo_infrastructure.NewTodoStore(todoRepository)
 	todoExecutor := todo_infrastructure.NewTodoExecutor(todoRepository)
 	todoService := todo_domain.NewTodoService(todoReader, todoStore, todoExecutor)
 	todoFacade := application.NewTodoFacde(todoService)
-	todoApiController := interfaces.NewTodoApiController(todoFacade)
-	return todoApiController
+	return todoFacade
 }

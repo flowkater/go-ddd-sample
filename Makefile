@@ -26,10 +26,6 @@ start:
 db-console:
 	docker-compose exec db psql ${DB_USER} ${DB_PASSWORD}
 
-.PHONY: generate
-generate:
-	docker-compose exec app go generate ./...
-
 .PHONY: migrate-create
 migrate-create:
 	docker-compose exec app migrate create -ext sql -dir migrations ${FILENAME}
@@ -69,6 +65,10 @@ test-all:
 .PHONY: test
 test:
 	docker-compose exec -e ENV=${ENV} -e TEST_DB_HOST=${TEST_DB_HOST} -e TEST_DB_PORT=${TEST_DB_PORT} -e TEST_DB_USER=${TEST_DB_USER} -e TEST_DB_PASSWORD=${TEST_DB_PASSWORD} -e TEST_DB_NAME=${TEST_DB_NAME} app go test -v ./${PACKAGE}
+
+.PHONY: generate
+generate:
+	go get github.com/99designs/gqlgen;go run github.com/99designs/gqlgen generate
 
 # .PHONY: local-test
 # local-test:
