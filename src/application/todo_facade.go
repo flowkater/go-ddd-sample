@@ -3,27 +3,27 @@ package application
 import (
 	"context"
 
-	domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
+	todo_domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
 )
 
 type TodoFacade struct {
-	todoService domain.TodoService
+	todoService todo_domain.TodoService
 }
 
-func NewTodoFacde(todoService domain.TodoService) TodoFacade {
+func NewTodoFacde(todoService todo_domain.TodoService) TodoFacade {
 	return TodoFacade{
 		todoService: todoService,
 	}
 }
 
-func (t *TodoFacade) AddTodo(ctx context.Context, command *domain.TodoCommandAddTodoRequest) (*domain.TodoInfo, error) {
+func (t *TodoFacade) AddTodo(ctx context.Context, command *todo_domain.TodoCommandAddTodoRequest) (*todo_domain.TodoInfo, error) {
 	return t.todoService.AddTodo(ctx, command)
 }
 
-func (t *TodoFacade) UpdateTodo(ctx context.Context, command *domain.TodoCommandUpdateTodoRequest) (*domain.TodoInfo, error) {
+func (t *TodoFacade) UpdateTodo(ctx context.Context, command *todo_domain.TodoCommandUpdateTodoRequest) (*todo_domain.TodoInfo, error) {
 	return t.todoService.UpdateTodo(ctx, command)
 }
 
-func (t *TodoFacade) DoneTodo(ctx context.Context, id uint) (*domain.TodoInfo, error) {
+func (t *TodoFacade) DoneTodo(ctx context.Context, id uint) (*todo_domain.TodoInfo, error) {
 	return t.todoService.DoneTodo(ctx, id)
 }

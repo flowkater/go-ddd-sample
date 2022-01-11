@@ -1,6 +1,8 @@
 package interfaces
 
-import domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
+import (
+	todo_domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
+)
 
 type (
 	AddTodoRequest struct {
@@ -16,16 +18,16 @@ type (
 	}
 )
 
-func (r *AddTodoRequest) toCommand() *domain.TodoCommandAddTodoRequest {
-	return &domain.TodoCommandAddTodoRequest{
+func (r *AddTodoRequest) toCommand() *todo_domain.TodoCommandAddTodoRequest {
+	return &todo_domain.TodoCommandAddTodoRequest{
 		Name:        r.Name,
 		Description: r.Description,
 		DueDate:     r.DueDate,
 	}
 }
 
-func (r *UpdateTodoRequest) toCommand(id uint) *domain.TodoCommandUpdateTodoRequest {
-	return &domain.TodoCommandUpdateTodoRequest{
+func (r *UpdateTodoRequest) toCommand(id uint) *todo_domain.TodoCommandUpdateTodoRequest {
+	return &todo_domain.TodoCommandUpdateTodoRequest{
 		ID:          id,
 		Name:        r.Name,
 		Description: r.Description,

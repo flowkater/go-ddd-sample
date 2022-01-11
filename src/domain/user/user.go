@@ -1,13 +1,13 @@
-package domain
+package user_domain
 
 import (
-	domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
+	todo_domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
 	"gorm.io/gorm"
 )
 
 type User struct {
-	Name  string         `json:"name"`
-	Email string         `json:"email"`
-	Todos []*domain.Todo `json:"todos"`
+	Name  string              `json:"name"`
+	Email string              `json:"email"`
+	Todos []*todo_domain.Todo `json:"todos"`
 	gorm.Model
 }

@@ -1,6 +1,8 @@
-package domain
+package todo_domain
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type TodoExecutor interface {
 	UpdateDone(db *gorm.DB, todo *Todo) (*Todo, error)

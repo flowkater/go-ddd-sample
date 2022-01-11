@@ -1,4 +1,4 @@
-package domain
+package todo_domain
 
 type TodoInfo struct {
 	ID          uint    `json:"id"`

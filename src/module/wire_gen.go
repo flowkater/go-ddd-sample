@@ -20,7 +20,7 @@ func InitializeTodoApiController() *interfaces.TodoApiController {
 	todoReader := infrastructure.NewTodoReader(todoRepository)
 	todoStore := infrastructure.NewTodoStore(todoRepository)
 	todoExecutor := infrastructure.NewTodoExecutor(todoRepository)
-	todoService := domain.NewTodoService(todoReader, todoStore, todoExecutor)
+	todoService := todo_domain.NewTodoService(todoReader, todoStore, todoExecutor)
 	todoFacade := application.NewTodoFacde(todoService)
 	todoApiController := interfaces.NewTodoApiController(todoFacade)
 	return todoApiController
