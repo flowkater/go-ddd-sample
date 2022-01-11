@@ -1,7 +1,7 @@
 package user_domain
 
 import (
-	todo_domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
+	"github.com/flowkater/go-ddd-sample/src/domain/todo_domain"
 	"gorm.io/gorm"
 )
 

@@ -3,6 +3,7 @@ package todo_domain
 type (
 	TodoCommandAddTodoRequest struct {
 		Name        string  `json:"name"`
+		UserID      uint    `json:"user_id"`
 		Description string  `json:"description"`
 		DueDate     *string `json:"due_date"`
 	}
@@ -18,6 +19,7 @@ type (
 func (t *TodoCommandAddTodoRequest) ToEntity() *Todo {
 	return &Todo{
 		Name:        t.Name,
+		UserID:      t.UserID,
 		Description: t.Description,
 		DueDate:     t.DueDate,
 	}

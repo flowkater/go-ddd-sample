@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/flowkater/go-ddd-sample/src/config"
-	todo_domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
-	user_domain "github.com/flowkater/go-ddd-sample/src/domain/user"
+	"github.com/flowkater/go-ddd-sample/src/domain/todo_domain"
+	"github.com/flowkater/go-ddd-sample/src/domain/user_domain"
 
 	interfaces "github.com/flowkater/go-ddd-sample/src/interfaces/todo"
 	"github.com/flowkater/go-ddd-sample/src/module"

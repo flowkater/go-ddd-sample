@@ -3,7 +3,7 @@ package application
 import (
 	"context"
 
-	todo_domain "github.com/flowkater/go-ddd-sample/src/domain/todo"
+	"github.com/flowkater/go-ddd-sample/src/domain/todo_domain"
 )
 
 type TodoFacade struct {
