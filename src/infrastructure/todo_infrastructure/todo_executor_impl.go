@@ -21,5 +21,6 @@ func (t *todoExecutor) Update(db *gorm.DB, todo *todo_domain.Todo) (*todo_domain
 
 func (t *todoExecutor) UpdateDone(db *gorm.DB, todo *todo_domain.Todo) (*todo_domain.Todo, error) {
 	todo.ToggleDone()
+
 	return t.todoRepository.UpdateDone(db, todo)
 }

@@ -5,16 +5,18 @@ type Todo {
   dueDate: String
   description: String
   user: User!
+  userId: ID!
 }
 
-input NewTodo {
+input CreateTodoInput {
   name: String!
-  userId: String!
+  userId: ID!
   dueDate: String
   description: String
 }
 
-input UpdateTodo {
+input UpdateTodoInput {
+  id: ID!
   name: String
   dueDate: String
   description: String
@@ -26,7 +28,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  createTodo(input: NewTodo!): Todo!
-  updateTodo(input: UpdateTodo!): Todo!
+  createTodo(input: CreateTodoInput!): Todo!
+  updateTodo(input: UpdateTodoInput!): Todo!
   doneTodo(id: ID!): Todo!
 }

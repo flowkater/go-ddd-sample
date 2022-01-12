@@ -2,9 +2,9 @@
 
 package model
 
-type NewTodo struct {
+type CreateTodoInput struct {
 	Name        string  `json:"name"`
-	UserID      string  `json:"userId"`
+	UserID      int     `json:"userId"`
 	DueDate     *string `json:"dueDate"`
 	Description *string `json:"description"`
 }
@@ -16,9 +16,11 @@ type Todo struct {
 	DueDate     *string `json:"dueDate"`
 	Description *string `json:"description"`
 	User        *User   `json:"user"`
+	UserID      int     `json:"userId"`
 }
 
-type UpdateTodo struct {
+type UpdateTodoInput struct {
+	ID          int     `json:"id"`
 	Name        *string `json:"name"`
 	DueDate     *string `json:"dueDate"`
 	Description *string `json:"description"`

@@ -5,7 +5,7 @@ import (
 	"github.com/flowkater/go-ddd-sample/src/config"
 	"github.com/flowkater/go-ddd-sample/src/domain/todo_domain"
 	"github.com/flowkater/go-ddd-sample/src/domain/user_domain"
-	"github.com/flowkater/go-ddd-sample/src/interface/resolver"
+	"github.com/flowkater/go-ddd-sample/src/interfaces/resolver"
 	"github.com/flowkater/go-ddd-sample/src/module"
 
 	"github.com/labstack/echo/v4"

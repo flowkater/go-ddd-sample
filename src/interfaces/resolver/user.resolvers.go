@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/flowkater/go-ddd-sample/src/interface/model"
+	"github.com/flowkater/go-ddd-sample/src/interfaces/model"
 )
 
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
