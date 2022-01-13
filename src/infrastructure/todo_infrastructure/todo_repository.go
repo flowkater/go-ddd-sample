@@ -8,7 +8,8 @@ import (
 type TodoRepository interface {
 	Create(db *gorm.DB, todo *todo_domain.Todo) (*todo_domain.Todo, error)
 	Update(db *gorm.DB, todo *todo_domain.Todo) (*todo_domain.Todo, error)
-	FindById(db *gorm.DB, id uint) (*todo_domain.Todo, error)
+	GetById(db *gorm.DB, id uint) (*todo_domain.Todo, error)
+	FindAllByUserId(db *gorm.DB, userId uint) ([]*todo_domain.Todo, error)
 	UpdateDone(db *gorm.DB, todo *todo_domain.Todo) (*todo_domain.Todo, error)
 }
 
@@ -42,11 +43,20 @@ func (t *todoRepository) UpdateDone(db *gorm.DB, todo *todo_domain.Todo) (*todo_
 	return todo, nil
 }
 
-func (t *todoRepository) FindById(db *gorm.DB, id uint) (*todo_domain.Todo, error) {
+func (t *todoRepository) GetById(db *gorm.DB, id uint) (*todo_domain.Todo, error) {
 	var todo todo_domain.Todo
 	if err := db.Where("id = ?", id).First(&todo).Error; err != nil {
 		return nil, err
 	}
 
 	return &todo, nil
+}
+
+func (t *todoRepository) FindAllByUserId(db *gorm.DB, userId uint) ([]*todo_domain.Todo, error) {
+	var todos []*todo_domain.Todo
+	if err := db.Where("user_id = ?", userId).Find(&todos).Error; err != nil {
+		return nil, err
+	}
+
+	return todos, nil
 }

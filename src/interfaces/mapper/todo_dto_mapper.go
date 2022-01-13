@@ -15,3 +15,12 @@ func TodoOf(todoInfo *todo_domain.TodoInfo) *model.Todo {
 		UserID:      int(todoInfo.UserID),
 	}
 }
+
+func TodosOf(todoInfos []*todo_domain.TodoInfo) []*model.Todo {
+	todos := make([]*model.Todo, len(todoInfos))
+	for i, todo := range todoInfos {
+		todos[i] = TodoOf(todo)
+	}
+
+	return todos
+}

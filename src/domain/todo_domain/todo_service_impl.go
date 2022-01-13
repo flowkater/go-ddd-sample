@@ -24,6 +24,30 @@ func NewTodoService(
 	}
 }
 
+func (t *todoService) FindTodoAllByUserId(ctx context.Context, userID uint) ([]*TodoInfo, error) {
+	db := config.DBWithContext(ctx)
+
+	return t.todoReader.FindTodoInfoAllByUserId(db, userID)
+}
+
+func (t *todoService) GetTodoById(ctx context.Context, id uint) (*TodoInfo, error) {
+	db := config.DBWithContext(ctx)
+
+	todo, err := t.todoReader.GetTodoById(db, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &TodoInfo{
+		ID:          todo.ID,
+		Name:        todo.Name,
+		Description: todo.Description,
+		Done:        todo.Done,
+		DueDate:     todo.DueDate,
+	}, nil
+
+}
+
 func (t *todoService) AddTodo(ctx context.Context, command *TodoCommandAddTodoRequest) (*TodoInfo, error) {
 	db := config.DBWithContext(ctx)
 
@@ -45,7 +69,7 @@ func (t *todoService) AddTodo(ctx context.Context, command *TodoCommandAddTodoRe
 func (t *todoService) UpdateTodo(ctx context.Context, command *TodoCommandUpdateTodoRequest) (*TodoInfo, error) {
 	db := config.DBWithContext(ctx)
 
-	getTodo, err := t.todoReader.GetTodo(db, command.ID)
+	getTodo, err := t.todoReader.GetTodoById(db, command.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +93,7 @@ func (t *todoService) UpdateTodo(ctx context.Context, command *TodoCommandUpdate
 func (t *todoService) DoneTodo(ctx context.Context, id uint) (*TodoInfo, error) {
 	db := config.DBWithContext(ctx)
 
-	getTodo, err := t.todoReader.GetTodo(db, id)
+	getTodo, err := t.todoReader.GetTodoById(db, id)
 	if err != nil {
 		return nil, err
 	}

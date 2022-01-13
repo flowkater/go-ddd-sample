@@ -5,5 +5,6 @@ import (
 )
 
 type TodoReader interface {
-	GetTodo(db *gorm.DB, id uint) (*Todo, error)
+	FindTodoInfoAllByUserId(db *gorm.DB, userId uint) ([]*TodoInfo, error)
+	GetTodoById(db *gorm.DB, id uint) (*Todo, error)
 }

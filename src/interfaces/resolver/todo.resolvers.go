@@ -5,7 +5,6 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/flowkater/go-ddd-sample/src/interfaces/mapper"
 	"github.com/flowkater/go-ddd-sample/src/interfaces/model"
@@ -38,10 +37,19 @@ func (r *mutationResolver) DoneTodo(ctx context.Context, id int) (*model.Todo, e
 	return mapper.TodoOf(todoInfo), nil
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *queryResolver) Todos(ctx context.Context, userID int) ([]*model.Todo, error) {
+	todoInfos, err := r.todoFacade.FindTodoAllByUserId(ctx, uint(userID))
+	if err != nil {
+		return nil, err
+	}
+
+	return mapper.TodosOf(todoInfos), nil
 }
 
 func (r *queryResolver) Todo(ctx context.Context, id int) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+	todoInfo, err := r.todoFacade.GetTodoById(ctx, uint(id))
+	if err != nil {
+		return nil, err
+	}
+	return mapper.TodoOf(todoInfo), nil
 }

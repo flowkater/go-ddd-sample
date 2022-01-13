@@ -16,6 +16,14 @@ func NewTodoFacde(todoService todo_domain.TodoService) TodoFacade {
 	}
 }
 
+func (t *TodoFacade) FindTodoAllByUserId(ctx context.Context, userID uint) ([]*todo_domain.TodoInfo, error) {
+	return t.todoService.FindTodoAllByUserId(ctx, userID)
+}
+
+func (t *TodoFacade) GetTodoById(ctx context.Context, id uint) (*todo_domain.TodoInfo, error) {
+	return t.todoService.GetTodoById(ctx, id)
+}
+
 func (t *TodoFacade) AddTodo(ctx context.Context, command *todo_domain.TodoCommandAddTodoRequest) (*todo_domain.TodoInfo, error) {
 	return t.todoService.AddTodo(ctx, command)
 }
