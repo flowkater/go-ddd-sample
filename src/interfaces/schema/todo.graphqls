@@ -4,7 +4,7 @@ type Todo {
   done: Boolean!
   dueDate: String
   description: String
-  user: User!
+  user: User! @goField(forceResolver: true) 
   userId: ID!
 }
 
@@ -23,7 +23,7 @@ input UpdateTodoInput {
 }
 
 extend type Query {
-  todos(userId: ID!): [Todo!]!
+  todos(userId: ID!): [Todo!]! 
   todo(id: ID!): Todo!
 }
 

@@ -8,8 +8,12 @@ import "github.com/flowkater/go-ddd-sample/src/application"
 
 type Resolver struct {
 	todoFacade application.TodoFacade
+	userFacade application.UserFacade
 }
 
-func NewResolver(todoFacade application.TodoFacade) *Resolver {
-	return &Resolver{todoFacade: todoFacade}
+func NewResolver(todoFacade application.TodoFacade, userFacade application.UserFacade) *Resolver {
+	return &Resolver{
+		todoFacade: todoFacade,
+		userFacade: userFacade,
+	}
 }

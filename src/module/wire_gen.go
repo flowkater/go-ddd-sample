@@ -9,7 +9,9 @@ package module
 import (
 	"github.com/flowkater/go-ddd-sample/src/application"
 	"github.com/flowkater/go-ddd-sample/src/domain/todo_domain"
+	"github.com/flowkater/go-ddd-sample/src/domain/user_domain"
 	"github.com/flowkater/go-ddd-sample/src/infrastructure/todo_infrastructure"
+	"github.com/flowkater/go-ddd-sample/src/infrastructure/user_infrastructure"
 )
 
 // Injectors from wire.go:
@@ -20,6 +22,14 @@ func InitializeTodoFacade() application.TodoFacade {
 	todoStore := todo_infrastructure.NewTodoStore(todoRepository)
 	todoExecutor := todo_infrastructure.NewTodoExecutor(todoRepository)
 	todoService := todo_domain.NewTodoService(todoReader, todoStore, todoExecutor)
-	todoFacade := application.NewTodoFacde(todoService)
+	todoFacade := application.NewTodoFacade(todoService)
 	return todoFacade
+}
+
+func InitializeUserFacade() application.UserFacade {
+	userRepository := user_infrastructure.NewUserRepository()
+	userReader := user_infrastructure.NewUserReader(userRepository)
+	userService := user_domain.NewUserService(userReader)
+	userFacade := application.NewUserFacade(userService)
+	return userFacade
 }

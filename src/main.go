@@ -47,9 +47,13 @@ func main() {
 
 func registerGraphqlHandler(e *echo.Echo) {
 	todoFacade := module.InitializeTodoFacade()
+	userFacade := module.InitializeUserFacade()
 
 	config := resolver.Config{
-		Resolvers: resolver.NewResolver(todoFacade),
+		Resolvers: resolver.NewResolver(
+			todoFacade,
+			userFacade,
+		),
 	}
 
 	graphqlHandler := func(c echo.Context) error {

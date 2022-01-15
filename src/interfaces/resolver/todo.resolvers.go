@@ -53,3 +53,17 @@ func (r *queryResolver) Todo(ctx context.Context, id int) (*model.Todo, error) {
 	}
 	return mapper.TodoOf(todoInfo), nil
 }
+
+func (r *todoResolver) User(ctx context.Context, todo *model.Todo) (*model.User, error) {
+	userInfo, err := r.userFacade.GetUserById(ctx, uint(todo.UserID))
+	if err != nil {
+		return nil, err
+	}
+
+	return mapper.UserOf(userInfo), nil
+}
+
+// Todo returns TodoResolver implementation.
+func (r *Resolver) Todo() TodoResolver { return &todoResolver{r} }
+
+type todoResolver struct{ *Resolver }

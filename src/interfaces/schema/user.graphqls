@@ -2,10 +2,16 @@
 #
 # https://gqlgen.com/getting-started/
 
+# build-in directive by Gqlgen
+directive @goField(forceResolver: Boolean, name: String) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+# build-in scalar
+scalar Time
 
 type User {
   id: ID!
   name: String!
+  todos: [Todo!]! @goField(forceResolver: true) 
 }
 
 input UserInput {
@@ -13,7 +19,7 @@ input UserInput {
 }
 
 type Query {
-  user(id: ID!): User!
+  user(id: ID!): User! 
 }
 
 type Mutation {

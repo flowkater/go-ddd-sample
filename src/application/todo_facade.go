@@ -10,7 +10,7 @@ type TodoFacade struct {
 	todoService todo_domain.TodoService
 }
 
-func NewTodoFacde(todoService todo_domain.TodoService) TodoFacade {
+func NewTodoFacade(todoService todo_domain.TodoService) TodoFacade {
 	return TodoFacade{
 		todoService: todoService,
 	}

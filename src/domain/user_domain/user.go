@@ -6,8 +6,8 @@ import (
 )
 
 type User struct {
+	ID    uint                `json:"id"`
 	Name  string              `json:"name"`
-	Email string              `json:"email"`
 	Todos []*todo_domain.Todo `json:"todos"`
 	gorm.Model
 }
