@@ -7,6 +7,7 @@ import (
 
 type UserRepository interface {
 	GetUserById(db *gorm.DB, id uint) (*user_domain.User, error)
+	FindUsersByIds(db *gorm.DB, ids []uint) ([]*user_domain.User, error)
 }
 
 type userRepository struct{}
@@ -23,4 +24,14 @@ func (r *userRepository) GetUserById(db *gorm.DB, id uint) (*user_domain.User, e
 	}
 
 	return user, nil
+}
+
+func (r *userRepository) FindUsersByIds(db *gorm.DB, ids []uint) ([]*user_domain.User, error) {
+	var users []*user_domain.User
+
+	if err := db.Debug().Where("id IN (?)", ids).Find(&users).Error; err != nil {
+		return nil, err
+	}
+
+	return users, nil
 }

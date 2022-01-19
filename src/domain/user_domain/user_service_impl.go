@@ -29,3 +29,22 @@ func (s *userService) GetUserById(ctx context.Context, id uint) (*UserInfo, erro
 		Name: user.Name,
 	}, nil
 }
+
+func (s *userService) FindUsersByIds(ctx context.Context, ids []uint) ([]*UserInfo, error) {
+	db := config.DBWithContext(ctx)
+
+	users, err := s.userReader.FindUsersByIds(db, ids)
+	if err != nil {
+		return nil, err
+	}
+
+	var userInfos []*UserInfo
+	for _, user := range users {
+		userInfos = append(userInfos, &UserInfo{
+			ID:   user.ID,
+			Name: user.Name,
+		})
+	}
+
+	return userInfos, nil
+}

@@ -18,3 +18,7 @@ func NewUserReader(userRepository UserRepository) user_domain.UserReader {
 func (r *userReader) GetUserById(db *gorm.DB, id uint) (*user_domain.User, error) {
 	return r.userRepository.GetUserById(db, id)
 }
+
+func (r *userReader) FindUsersByIds(db *gorm.DB, ids []uint) ([]*user_domain.User, error) {
+	return r.userRepository.FindUsersByIds(db, ids)
+}

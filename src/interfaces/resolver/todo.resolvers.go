@@ -55,12 +55,14 @@ func (r *queryResolver) Todo(ctx context.Context, id int) (*model.Todo, error) {
 }
 
 func (r *todoResolver) User(ctx context.Context, todo *model.Todo) (*model.User, error) {
-	userInfo, err := r.userFacade.GetUserById(ctx, uint(todo.UserID))
-	if err != nil {
-		return nil, err
-	}
+	return r.userFacade.NewUserLoader(ctx).Load(uint(todo.UserID))
 
-	return mapper.UserOf(userInfo), nil
+	// userInfo, err := r.userFacade.GetUserById(ctx, uint(todo.UserID))
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// return mapper.UserOf(userInfo), nil
 }
 
 // Todo returns TodoResolver implementation.
