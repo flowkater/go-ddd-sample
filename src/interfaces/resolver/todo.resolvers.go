@@ -6,6 +6,8 @@ package resolver
 import (
 	"context"
 
+	"github.com/flowkater/go-ddd-sample/src/domain/user_domain"
+	"github.com/flowkater/go-ddd-sample/src/interfaces/dataloader"
 	"github.com/flowkater/go-ddd-sample/src/interfaces/mapper"
 	"github.com/flowkater/go-ddd-sample/src/interfaces/model"
 )
@@ -54,15 +56,15 @@ func (r *queryResolver) Todo(ctx context.Context, id int) (*model.Todo, error) {
 	return mapper.TodoOf(todoInfo), nil
 }
 
-func (r *todoResolver) User(ctx context.Context, todo *model.Todo) (*model.User, error) {
-	return r.userFacade.NewUserLoader(ctx).Load(uint(todo.UserID))
+func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
+	userEntity, err := dataloader.For(ctx).UserById.Load(uint(obj.UserID))
 
-	// userInfo, err := r.userFacade.GetUserById(ctx, uint(todo.UserID))
-	// if err != nil {
-	// 	return nil, err
-	// }
+	// userInfo, err := r.userFacade.GetUserByIdDataLoader(ctx, uint(obj.UserID))
+	if err != nil {
+		return nil, err
+	}
 
-	// return mapper.UserOf(userInfo), nil
+	return mapper.UserOf(&user_domain.UserInfo{ID: userEntity.ID, Name: userEntity.Name}), nil
 }
 
 // Todo returns TodoResolver implementation.

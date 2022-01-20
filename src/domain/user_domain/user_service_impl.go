@@ -48,3 +48,9 @@ func (s *userService) FindUsersByIds(ctx context.Context, ids []uint) ([]*UserIn
 
 	return userInfos, nil
 }
+
+func (s *userService) UserByIdLoader(ctx context.Context) UserLoader {
+	db := config.DBWithContext(ctx)
+
+	return s.userReader.UserByIdLoader(db)
+}
